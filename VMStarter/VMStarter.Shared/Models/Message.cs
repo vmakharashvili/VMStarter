@@ -8,6 +8,7 @@ namespace VMStarter.Shared.Models
     {
 		public bool Success { get; private set; }
 		public string Text { get; private set; }
+		public List<string> MultipleErrors { get; set; }
 		public T ResponseObject { get; private set; }
 
 		public Message()
@@ -34,6 +35,12 @@ namespace VMStarter.Shared.Models
 			Success = false;
 			Text = errorMessage;
 			ResponseObject = responseMessage;
+		}
+
+		public Message<T> AddToMultipleErrorsList(string errorMessage){
+			if (Success == true) Success = false;
+			MultipleErrors.Add(errorMessage);
+			return this;
 		}
 	}
 }
