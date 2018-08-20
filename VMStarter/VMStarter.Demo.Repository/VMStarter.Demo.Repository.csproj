@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VMStarter.Demo.DAL\VMStarter.Demo.DAL.csproj" />
+    <ProjectReference Include="..\VMStarter.Demo.Domain\VMStarter.Demo.Domain.csproj" />
+    <ProjectReference Include="..\VMStarter.Shared\VMStarter.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
