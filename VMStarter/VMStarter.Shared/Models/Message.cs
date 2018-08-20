@@ -7,8 +7,8 @@ namespace VMStarter.Shared.Models
     public class Message<T>
     {
 		public bool Success { get; private set; }
-		public string Text { get; private set; }
-		public List<string> MultipleErrors { get; set; }
+		public string Text { get { return string.Join(", ", Errors.ToArray()); } }
+        public List<string> Errors { get; set; }
 		public T ResponseObject { get; private set; }
 
 		public Message()
@@ -20,7 +20,8 @@ namespace VMStarter.Shared.Models
 		public Message(string errorMessage)
 		{
 			Success = false;
-			Text = errorMessage;
+            Errors = new List<string>();
+            Errors.Add(errorMessage);
 			ResponseObject = default(T);
 		}
 
@@ -33,13 +34,20 @@ namespace VMStarter.Shared.Models
 		public Message(string errorMessage, T responseMessage)
 		{
 			Success = false;
-			Text = errorMessage;
+            Errors = new List<string>();
+            Errors.Add(errorMessage);
 			ResponseObject = responseMessage;
 		}
 
+        public Message<T> AddNewMessage(string message)
+        {
+            Errors.Add(message);
+            return this;
+        }
+
 		public Message<T> AddToMultipleErrorsList(string errorMessage){
 			if (Success == true) Success = false;
-			MultipleErrors.Add(errorMessage);
+			Errors.Add(errorMessage);
 			return this;
 		}
 	}

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using VMStarter.Shared.Extensions;
 
 namespace VMStarter.Shared.Actions
 {
@@ -44,6 +46,17 @@ namespace VMStarter.Shared.Actions
 
             return config.CreateMapper()
                 .Map<TMapSource, TMapDestination>(source, destination);
+        }
+
+        protected async Task<TMapDestination> MappAsync<TMapSource, TMapDestination>(TMapSource source, TMapDestination destination)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<TMapSource, TMapDestination>();
+            });
+
+            return await config.CreateMapper()
+                .MapAsync<TMapSource, TMapDestination>(Task.Run(()=>source));
         }
     }
 }
